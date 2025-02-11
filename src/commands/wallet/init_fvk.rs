@@ -104,7 +104,7 @@ impl Command {
         )
         .await?;
 
-        let purpose = match (opts.seed_fingerprint, opts.hd_account_index) {
+        let purpose = match (dbg!(opts.seed_fingerprint), opts.hd_account_index) {
             (Some(seed_fingerprint), Some(hd_account_index)) => Ok(AccountPurpose::Spending {
                 derivation: Some(Zip32Derivation::new(
                     SeedFingerprint::from_bytes(
