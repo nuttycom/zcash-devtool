@@ -81,6 +81,10 @@ qrcode = { version = "0.14", optional = true, default-features = false }
 rqrr = { version = "0.8", optional = true }
 ur = { version = "0.4", optional = true }
 
+# Zcashd migration
+zewif = { version = "0.1", optional = true }
+zewif-zcashd = { version = "0.1", optional = true }
+
 # Tree exploration
 incrementalmerkletree = "0.8"
 shardtree = "0.6"
@@ -109,6 +113,7 @@ tui = [
     "dep:tokio-util",
     "dep:tui-logger",
 ]
+zcashd-migrate = ["dep:zewif", "dep:zewif-zcashd"]
 
 [patch.crates-io]
 equihash = { path = "../../librustzcash/canon/components/equihash/" }
@@ -123,3 +128,11 @@ zcash_primitives = { path = "../../librustzcash/canon/zcash_primitives" }
 zcash_proofs = { path = "../../librustzcash/canon/zcash_proofs" }
 zcash_protocol = { path = "../../librustzcash/canon/components/zcash_protocol" }
 zip321 = { path = "../../librustzcash/canon/components/zip321/" }
+
+zewif = { path = "../../zewif/" }
+zewif-zcashd = { path = "../../zewif-zcashd/" }
+zewif-zingo = { path = "../../zewif-zingo/" }
+
+#zewif = { git = "https://github.com/nuttycom/zewif", rev = "61c988fbfb6c3e74c5b98ba3da1cbc521b3967bd" }
+#zewif-zcashd = { git = "https://github.com/nuttycom/zewif-zcashd", rev = "dc7825b03e413596fcf301d9918df24dc012c22c", optional = true }
+#zewif-zingo = { git = "https://github.com/nuttycom/zewif-zingo", rev = "9e647c9e5bfc9b795fdd6421d02a522f86093420", optional = true }

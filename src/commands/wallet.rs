@@ -7,6 +7,8 @@ pub(crate) mod gen_addr;
 pub(crate) mod import_ufvk;
 pub(crate) mod init;
 pub(crate) mod init_fvk;
+#[cfg(feature = "zcashd-migrate")]
+pub(crate) mod init_wallet_dat;
 pub(crate) mod list_accounts;
 pub(crate) mod list_addresses;
 pub(crate) mod list_tx;
@@ -26,6 +28,10 @@ pub(crate) enum Command {
 
     /// Initialise a new view-only light wallet
     InitFvk(init_fvk::Command),
+
+    /// Initialise a new light wallet from a zcashd `wallet.dat` file.
+    #[cfg(feature = "zcashd-migrate")]
+    InitWalletDat(init_wallet_dat::Command),
 
     /// Decrypt and display the wallet's mnemonic recovery phrase, if any.
     DisplayMnemonic(display_mnemonic::Command),
