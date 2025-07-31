@@ -124,7 +124,7 @@ impl Server<'_> {
 
     fn use_tls(&self) -> bool {
         // Assume that localhost will never have a cert, and require remotes to have one.
-        !matches!(self.host.as_ref(), "localhost" | "127.0.0.1" | "::1")
+        !matches!(self.host.as_ref(), "localhost" | "127.0.0.1" | "::1" | "100.71.182.59")
     }
 
     fn endpoint(&self) -> String {
@@ -150,7 +150,7 @@ impl Server<'_> {
             channel
         };
 
-        Ok(CompactTxStreamerClient::new(channel.connect().await?))
+        Ok(CompactTxStreamerClient::new(dbg!(channel.connect().await)?))
     }
 
     async fn connect_over_tor(
