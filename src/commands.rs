@@ -13,6 +13,9 @@ pub(crate) mod zip48;
 #[cfg(feature = "pczt-qr")]
 pub(crate) mod keystone;
 
+#[cfg(feature = "near-swaps")]
+pub(crate) mod near;
+
 #[derive(Debug, Args)]
 pub(crate) struct Wallet {
     /// Path to the wallet directory
@@ -52,6 +55,17 @@ pub(crate) struct Keystone {
 
     #[command(subcommand)]
     pub(crate) command: keystone::Command,
+}
+
+#[cfg(feature = "near-swaps")]
+#[derive(Debug, Args)]
+pub(crate) struct Near {
+    /// Path to the wallet directory
+    #[arg(short, long)]
+    pub(crate) wallet_dir: Option<String>,
+
+    #[command(subcommand)]
+    pub(crate) command: near::Command,
 }
 
 pub(crate) fn select_account<DbT: WalletRead<AccountId = AccountUuid>>(

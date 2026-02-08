@@ -24,6 +24,7 @@ secrecy = "0.8"
 serde = "1.0"
 time = "0.3"
 tokio = { version = "1.21.0", features = ["fs", "io-std", "macros", "rt-multi-thread", "signal"] }
+one-click-sdk-rs = { version = "0.1", optional = true }
 tokio-socks = "0.5"
 toml = "0.8"
 tonic = { version = "0.14", features = ["gzip", "tls-webpki-roots"] }
@@ -105,6 +106,7 @@ pczt-qr = ["dep:image", "dep:minicbor", "dep:nokhwa", "dep:qrcode", "dep:rqrr", 
 transparent-inputs = [
     "zcash_client_sqlite/transparent-inputs",
 ]
+near-swaps = ["dep:one-click-sdk-rs"]
 tui = [
     "dep:crossterm",
     "dep:ratatui",

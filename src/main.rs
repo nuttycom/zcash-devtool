@@ -20,6 +20,9 @@ mod remote;
 mod socks;
 mod ui;
 
+#[cfg(feature = "near-swaps")]
+mod near_api;
+
 #[cfg(feature = "tui")]
 #[allow(dead_code)]
 mod tui;
@@ -55,6 +58,10 @@ pub(crate) enum Command {
     /// Emulate a Keystone device
     #[cfg(feature = "pczt-qr")]
     Keystone(commands::Keystone),
+
+    /// Swap ZEC with other currencies via NEAR 1Click
+    #[cfg(feature = "near-swaps")]
+    Near(commands::Near),
 
     CreateMultisigAddress(commands::create_multisig_address::Command),
 }
@@ -225,6 +232,15 @@ fn main() -> Result<(), anyhow::Error> {
                 commands::keystone::Command::Enroll(command) => {
                     command.run(shutdown, wallet_dir).await
                 }
+            },
+
+            #[cfg(feature = "near-swaps")]
+            Command::Near(commands::Near {
+                wallet_dir,
+                command,
+            }) => match command {
+                commands::near::Command::Pay(command) => command.run(wallet_dir).await,
+                commands::near::Command::ReceiveZec(command) => command.run(wallet_dir).await,
             },
 
             Command::CreateMultisigAddress(command) => command.run(),

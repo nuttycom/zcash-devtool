@@ -20,6 +20,8 @@ pub(crate) struct WalletConfig {
     network: consensus::Network,
     seed_ciphertext: Option<String>,
     birthday: BlockHeight,
+    #[cfg(feature = "near-swaps")]
+    near_api_key: Option<String>,
 }
 
 impl WalletConfig {
@@ -73,6 +75,11 @@ impl WalletConfig {
     pub(crate) fn birthday(&self) -> BlockHeight {
         self.birthday
     }
+
+    #[cfg(feature = "near-swaps")]
+    pub(crate) fn near_api_key(&self) -> Option<&str> {
+        self.near_api_key.as_deref()
+    }
 }
 
 fn init_wallet_config<P: AsRef<Path>>(
@@ -99,6 +106,8 @@ fn init_wallet_config<P: AsRef<Path>>(
         mnemonic,
         network: Some(Network::from(network).name().to_string()),
         birthday: Some(u32::from(birthday)),
+        #[cfg(feature = "near-swaps")]
+        near_api_key: None,
     };
 
     let config_str = toml::to_string(&config)
@@ -144,6 +153,8 @@ impl WalletConfig {
             network,
             seed_ciphertext: config.mnemonic,
             birthday,
+            #[cfg(feature = "near-swaps")]
+            near_api_key: config.near_api_key,
         })
     }
 }
@@ -153,6 +164,8 @@ struct ConfigEncoding {
     mnemonic: Option<String>,
     network: Option<String>,
     birthday: Option<u32>,
+    #[cfg(feature = "near-swaps")]
+    near_api_key: Option<String>,
 }
 
 fn encrypt_mnemonic<'a>(
